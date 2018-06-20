@@ -22,10 +22,17 @@ application still needs some improvements to be used in the real world.
 
 
 
+
+
+
 The application is designed as combination of 4 parts which are developed by different technologies: 
+
         web application server part (Java, Spring Framework, Maven, Apache Tomcat)
+        
         android part (Java, Cordova)
+        
         robot controlling part (JavaScript, HTML, CSS, ROSLIB, Angular)
+        
         videoChat part (JavaScript, HTML, CSS, WebRTC, QuickBlox)
 
 
