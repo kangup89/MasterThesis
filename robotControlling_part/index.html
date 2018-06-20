@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+  <head>
+    <meta charset="utf-8" />
+    <!--<script src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="http://cdn.robotwebtools.org/ros2djs/current/ros2d.min.js"></script>
+    <script type="text/javascript" src="http://cdn.robotwebtools.org/nav2djs/current/nav2d.min.js"></script>
+    <script src="build/roslib.min.js"></script>-->
+    <script type="text/javascript" src="http://cdn.robotwebtools.org/EaselJS/current/easeljs.min.js"></script>
+    <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+    <!--<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
+    <script src="build/roslib.min.js"></script>
+    <script src="build/ros2d.js"></script>
+    <script src="build/nav2d.js"></script>
+    <script src="build/ros2d2.js"></script>
+    <script src="build/nav2d2.js"></script>
+
+    <!-- Angular -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title></title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="topnav" id="myTopnav">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#video"><i class="fa fa-video-camera"></i> Video</a></li>
+          <li><a href="#map"><i class="fa fa-map-o"></i> Map</a></li>
+          <li id="connecting">
+            Connecting to rosbridge...
+          </li>
+          <li id="connected" style="color:#00D600; display:none">
+            Connected
+          </li>
+          <li id="error" style="color:#FF0000; display:none">
+            Error in the backend!
+          </li>
+          <li id="closed" style="color: #ffffff; display:none">
+            Connection closed.
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div id="wrapper">
+        <div ng-view></div>
+        <div id="wrapper_inner">
+            <div class="row row_top">
+                <div class="button" id="forward">
+                    <div class="forward btn" id="btn_forward" onmousedown="move('forward')" onmouseup="mouseUp()"
+                                                              ontouchstart="move('forward')" ontouchend="mouseUp()"></div>
+                </div>
+            </div>
+            <div class="row row_left">
+                <div class="button" id="left">
+                    <div class="left btn" id="btn_left" onmousedown="move('left')" onmouseup="mouseUp()"
+                                                        ontouchstart="move('left')" ontouchend="mouseUp()"></div>
+               
+                </div>
+            </div>
+            <div class="row row_right">
+                <div class="button" id="right">
+                    <div class="right btn" id="btn_right" onmousedown="move('right')" onmouseup="mouseUp()"
+                                                          ontouchstart="move('right')" ontouchend="mouseUp()"></div>
+               
+                </div>
+            </div>
+            <div class="row row_bottom">
+                <div class="button" id="reverse">
+                    <div class="reverse btn" id="btn_reverse" onmousedown="move('reverse')" onmouseup="mouseUp()"
+                                                              ontouchstart="move('reverse')" ontouchend="mouseUp()"></div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+  </body>
+</html>

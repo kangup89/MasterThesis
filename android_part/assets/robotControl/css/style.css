@@ -1,0 +1,262 @@
+body{
+	background: rgba(255, 255, 255, 1);*/
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 200;
+	font-size: 12px;
+	/*color: #C1C1C1;*/
+	//text-shadow: 0px 1px 0px rgba(255,255,255,0.50);
+	overflow: hidden;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	border: 0;
+	//max-height: 900px;
+	overflow: hidden; /*  Disable scrollbars */
+	display: block;  /* No floating content on sides */
+}
+
+#turtlebot{
+	cursor: pointer;
+	position: absolute;
+	top:10px;
+	left:10px;
+	z-index: 99;
+	background: url('img/turtlebot_default.png');
+	background-position: center center !important;
+	background-repeat: no-repeat !important;
+	background-size:contain !important;
+	margin:0 auto;
+	width: 72px;
+	height: 72px;
+}
+#turtlebot:hover{
+	background: url('img/turtlebot_hover.png');
+}
+
+#wrapper{
+	width:100%;
+	height: 100%;
+}
+
+#wrapper_inner{
+	//background: rgba(255, 255, 255, 1);
+	background-color:transparent;
+	//border-radius: 20px;
+	//width: 100%;
+	//height: 100%;
+	position: relative;
+	//top: 50%;
+	//left: 30%;
+}
+
+.row{
+	width:15%;
+	float:left;
+	text-align: center;
+	margin: 0 0 0 0;
+}
+
+.button:active, .button.active{
+	color:#2E8625;
+}
+
+.button:hover{
+	color:#333;
+}
+
+.button{
+	cursor: pointer;
+	//width:33%;
+	float:left;
+	//margin:0 auto;
+}
+
+.full .button{
+	//width:100%;
+}
+
+.btn{
+	background-position: center center !important;
+	background-repeat: no-repeat !important;
+	background-size:contain !important;
+	//margin:0 auto;
+	width: 50px;
+	height: 50px;
+}
+
+.forward{
+	background: url('../img/forward_default.png');
+
+}
+.forward:hover{
+	background: url('../img/forward_default2.png');
+}
+.active .forward{
+	background: url('../img/forward_hover.png');
+}
+
+.reverse{
+	background: url('../img/reverse_default.png');
+}
+.reverse:hover{
+	background: url('../img/reverse_default2.png');
+}
+.active .reverse{
+	background: url('../img/reverse_hover.png');
+}
+
+.left{
+	background: url('../img/left_default.png');
+	//margin-left: 90px;
+}
+.left:hover{
+	background: url('../img/left_default2.png');
+}
+
+.active .left{
+	background: url('../img/left_hover.png');
+}
+.right{
+	background: url('../img/right_default.png');
+	//margin-right: 100px;
+}
+.right:hover{
+	background: url('../img/right_default2.png');
+}
+
+.active .right{
+	background: url('../img/right_hover.png');
+}
+
+.stop{
+	background: url('../img/stop_default.png');
+	//width:69px;
+}
+.stop:hover{
+	background: url('../img/stop_default2.png');
+	//width:69px;
+}
+
+.active .stop{
+	background: url('../img/stop_hover.png');
+}
+
+.ros_image{
+	width: 100%,
+	height: 100%
+}
+
+.navbar {
+	min-height: 50px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #000;
+    overflow: hidden;
+		font-size: 18px;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    display: block;
+    color: #fff;
+    text-align: center;
+    //padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navbar-nav>li>a {
+	line-height: 20px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: #ddd;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: #ddd;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar-nav {
+	margin: 0 0 0 0;
+}
+
+canvas {
+	position: absolute;
+	opacity: 0.8;
+}
+
+li {
+	font-size: 15px;
+}
+
+.row_top {
+	margin-left: 45%;
+	margin-top: 3%;
+	margin-bottom: 3%;
+	margin-right: 45%;
+}
+
+.row_left {
+	width: 10%;
+	margin-top: 35%;
+	margin-bottom: 30%;
+}
+
+.row_right {
+	width: 10%;
+	margin-top: 35%;
+	margin-bottom: 30%;
+	float: right;
+}
+
+.row_bottom {
+	margin-left: 45%;
+	margin-top: 3%;
+	margin-bottom: 3%;
+	margin-right: 45%;
+}
+
+#left {
+	margin-right: 3%;
+}
+
+#right {
+	//margin-left: 68%;
+	float: right;
+}
+
+#reverse {
+	//margin-left: 12%;
+	//margin-top: 5%;
+}
+
+#stop {
+	margin: 0 25% 0 27%;
+}
+
+
+.ng-scope {
+	position: absolute;
+}
+
+/*#map2 {
+	position: absolute;
+}
+#costmap {
+	position: absolute;
+}*/

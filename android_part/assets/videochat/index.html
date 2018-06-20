@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Video Chat Application using WebRTC</title>
+
+    <link rel="canonical" href="https://quickblox.github.io/quickblox-javascript-sdk/samples/webrtc"/>
+    <link rel="shortcut icon" href="https://quickblox.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+    <!-- use http://una.im/CSSgram/ for filters -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/una/CSSgram/master/source/css/cssgram.css">
+    <!-- app styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="wrapper j-wrapper">
+
+        <main class="app" id="app">
+            <div class="page">
+                <!-- JOIN -->
+                <form class="join j-join">
+
+                    <div class="join__body">
+                       
+                        <div class="join__row">
+                            <button type="submit" class="join__btn">Call</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="dashboard j-dashboard">
+                </div>
+            </div>
+        </main>
+
+
+        <!-- SOUNDS -->
+        <audio id="callingSignal" loop preload="auto">
+            <source src="audio/calling.ogg"></source>
+            <source src="audio/calling.mp3"></source>
+        </audio>
+
+        <audio id="ringtoneSignal" loop preload="auto">
+            <source src="audio/ringtone.ogg"></source>
+            <source src="audio/ringtone.mp3"></source>
+        </audio>
+
+        <audio id="endCallSignal" preload="auto">
+            <source src="audio/end_of_call.ogg"></source>
+            <source src="audio/end_of_call.mp3"></source>
+        </audio>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal fade" id="connect_err" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <h4>Connect to chat is failed</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p class="text-danger">
+                        Something wrong with connect to chat. Check internet connection or user info and trying  again.
+                    </p>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="already_auth" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Warning</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p class="text-danger">User has already authorized.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="error_no_calles" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p class="text-danger">Please choose users to call</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="income_call" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Call from <strong class="j-ic_initiator"></strong></h4>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default j-decline">Decline</button>
+                    <button type="button" class="btn btn-primary j-accept">Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATES -->
+        <!-- stateBoard -->
+        <script type="text/template" id="tpl_default">
+            QuickBlox room is <b><%= tag %></b>.
+            Logged in as <b><%= name %></b>
+            <button class='fw-link j-logout'>Logout</button>
+        </script>
+
+        <script type="text/template" id="tpl_during_call">
+            Login in as <b><%= name %></b>
+        </script>
+
+        <script type="text/template" id="tpl_device_not_found">
+            Error: devices (camera or microphone) are not found.
+            <span class="qb-text">Login in <b>as <%=name%></b></span>
+            <button class='fw-link j-logout'>Logout</button>
+        </script>
+
+        <script type="text/template" id="tpl_accept_call">
+            <%  _.each(users, function(el, i, list) { %>
+                <% if(list.length === 1){ %>
+                    <b><%= el.full_name %></b> has accepted the call
+                <% } else { %>
+                    <% if( (i+1) === list.length) { %>
+                        <b><%= el.full_name %></b> have accepted the call
+                    <% } else { %>
+                        <b><%= el.full_name %></b>,
+                    <% } %>
+                <% } %>
+            <% }); %>
+        </script>
+
+        <script type="text/template" id="tpl_call_stop">
+            Call is stopped.&emsp;
+            Login&nbsp;in&nbsp;as&nbsp;<%=name%>
+            <button class='fw-link j-logout'>Logout</button>
+        </script>
+
+        <script type="text/template" id="p2p_call_stop">
+            <b><%=name%> has <%=reason%>.</b> Call is stopped.&emsp;
+            Login&nbsp;in&nbsp;as&nbsp;<%=currentName%>
+            <button class='fw-link j-logout'>Logout</button>
+        </script>
+
+    <script type="text/template" id="dashboard_tpl">
+        <div class="state_board j-state_board"></div>
+
+        <div class="dashboard__inner inner">
+        
+            <div class="users j-users_wrap"></div>
+
+            <div class="board clearfix j-board"></div>
+        </div>
+    </script>
+
+    <script type="text/template" id="frames_tpl">
+        <div class="frames">
+            <div class="frames__main">
+                <div class="frames__main_timer invisible" id="timer">
+                </div>
+
+                <div class="qb-video-main">
+                    <video id="main_video" class="frames__main_v qb-video_source"></video>
+                </div>
+            </div>
+            
+            
+            <div class="frames__callees j-callees"></div>
+            
+        </div>
+
+        <div class="caller">
+            <div class="caller__ctrl">
+                <button class="caller__ctrl_btn j-actions"></button>
+            </div>
+            
+            
+
+            <div class="caller__frames">
+                <div class="qb-video-local">
+                    <video id="localVideo" class="qb-video_source"></video>
+                </div>
+                
+                
+            </div>
+        </div>
+    </script>
+
+
+    <script type="text/template" id="user_tpl">
+        <div class="users__item">
+            <button class="users__user j-user" data-id="<%= id %>" data-login="<%= login %>" data-name="<%= full_name %>">
+                <i class="user__icon"></i>
+                <span class="user__name"><%= full_name %></span>
+                <i class="users__btn_remove j-user-remove"></i>
+            </button>
+        </div>
+    </script>
+
+    <script type="text/template" id="callee_video">
+        <div class="frames_callee callees__callee j-callee">
+            <div class="frames_callee__inner">
+                <p class="frames_callee__status j-callee_status_<%=userID%>">
+                    <%=state%>
+                </p>
+
+                <div class="qb-video">
+                    <video class="j-callees__callee__video qb-video_source"
+                        id="remote_video_<%=userID%>"
+                        data-user="<%=userID%>">
+                    </video>
+                </div>
+            </div>
+
+            <p class="frames_callee__name"><%=name%></p>
+        </div>
+    </script>
+
+    <!-- SCRIPT -->
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- QB -->
+    <script src="quickblox.min.js"></script>
+
+    <!-- app -->
+    <script src="config.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/stateBoard.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- hack for github Pages -->
+    <script>
+      var host = "quickblox.github.io";
+      if ((host == window.location.host) && (window.location.protocol != "https:"))
+        window.location.protocol = "https";
+    </script>
+</body>
+</html>
