@@ -19,3 +19,16 @@ The developed application is tested by using various performance testing tools. 
 show that the application has relatively high performance. In this thesis, we have reached our
 goal to develop an android application with essential services we have decided, but the
 application still needs some improvements to be used in the real world.
+
+
+
+The application is designed as combination of 4 parts which are developed by different technologies: 
+        web application server part (Java, Spring Framework, Maven, Apache Tomcat)
+        android part (Java, Cordova)
+        robot controlling part (JavaScript, HTML, CSS, ROSLIB, Angular)
+        videoChat part (JavaScript, HTML, CSS, WebRTC, QuickBlox)
+
+
+You can find more detailed describtion in "kangul_Master_Thesis.pdf"
+        
+        
