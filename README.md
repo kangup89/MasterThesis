@@ -22,19 +22,17 @@ application still needs some improvements to be used in the real world.
 
 
 
-
-
-
 The application is designed as combination of 4 parts which are developed by different technologies: 
 
-        web application server part (Java, Spring Framework, Maven, Apache Tomcat)
+        web application server part (Java, Spring Framework, Maven, Apache Tomcat, AWS, JSON Web Token)
         
         android part (Java, Cordova)
         
         robot controlling part (JavaScript, HTML, CSS, ROSLIB, Angular)
         
         videoChat part (JavaScript, HTML, CSS, WebRTC, QuickBlox)
-
+        
+        database (MongoDB)
 
 You can find more detailed describtion in "kangul_Master_Thesis.pdf"
         
